@@ -1,0 +1,31 @@
+---
+- name: Install Grafana on Ubuntu 20.04
+  hosts: server
+  tasks:    
+
+    - name: Get Grafana GPG key
+      apt_key:
+        url: https://packages.grafana.com/gpg.key
+    
+    - name: Add Grafana Repository
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.grafana.com/oss/deb stable main
+        state: present
+        filename: grafana
+        mode: 0600
+    
+    - name: Update the packages cache
+      apt: 
+        update_cache: yes
+
+    - name: Install Grafana
+      apt: 
+        name:
+          - grafana
+        state: present
+
+    - name: Start Grafana
+      service: 
+        name: grafana-server
+        state: started
+        enabled: yes

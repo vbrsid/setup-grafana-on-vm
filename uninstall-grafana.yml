@@ -1,0 +1,16 @@
+---
+- name: Uninstall Grafana on Ubuntu 20.04
+  hosts: server
+  tasks:    
+
+    - name: Stop Grafana
+      service: 
+        name: grafana-server
+        state: stopped
+
+    - name: Uninstall Grafana
+      apt: 
+        name:
+          - grafana
+        state: absent
+
